@@ -1,0 +1,41 @@
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 10px 10px 8px 14px;
+}
+th{
+    width: 400px;
+}
+
+td{
+    width: 500px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+.FOpos{
+    margin-top: 300px;
+}
+
+.TApos{
+    margin-top: 70px;
+}
+
+
+.poptext{
+    visibility: hidden;
+}
+
+#FLname{
+    font-family: Arial, Helvetica, sans-serif;
+}
