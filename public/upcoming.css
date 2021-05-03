@@ -11,7 +11,7 @@
 .card-header1{
     border-radius: 70px;
         height: 80px;
-        width: 900px;
+        width: 850px;
 }
 
 .card1 {
@@ -24,7 +24,7 @@
 
 .datee{
    position: absolute;
-   margin-left: 770px;
+   margin-left: 725px;
    font-family: 'PT Serif',serif;
 }
 
@@ -32,3 +32,9 @@
     margin-bottom: 270px;
 }
 
+.CTpos.UEpos {
+    margin-left: 22%;
+}
+.CNpos.CNstyle{
+    margin-left: 20%;
+}

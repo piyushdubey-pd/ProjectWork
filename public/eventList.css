@@ -1,12 +1,23 @@
-/*JUMBOTRON*/
+
+/*MAIN CSS*/
+/*NAV-BAR*/
+/*FOOTER*/
+
+
+/******************************JUMBOTRON**************************/
+
 .Jpos{
      margin-bottom: 0px;
      background-color: black;
-     padding: 1.5rem 2rem 0.3rem 2rem ;
-}
+     padding: 0rem 0rem 0.5rem 2rem ;
+    padding-left: 0%;
+    }
+
+    
 /*#e9ecef*/
 
-/*heading*/
+
+/**************************BMSCE COLLEGE heading************************/
 
 #Hstyle{
     color: #ffffff;
@@ -18,9 +29,9 @@
 .HTpos{
     margin-left: 25px;
 }
-  
 
-/*TITLe*/
+
+/*************************************TITLE*************************/
 .TSpos{
     margin-left: 995px;
 }
@@ -29,43 +40,51 @@
   font-size: 50px;
 }
 
-/*LOGO*/
+/*************************************LOGO******************************************/
 .Lpos{
+
     margin-left: 20px;
-    padding-bottom: 5px;
+    margin-top: 10px;
     margin-bottom: 2px;
     animation: rotation 3s infinite linear;           /*Style of rotation */
 }
 
 @keyframes rotation {                    /*Animatable attribute of CSS -webkit-animation and @keyframes */
   100% {
-    transform: rotatey(360deg);
+    transform: rotateY(360deg);
   }
 }
 
-/**LOGGED IN AS******/
+
+
+
+/**********************************LOGGED IN AS*******************************/
 .LGpos{
     position: absolute;
     color: #000;
-    background-color: #3487e0;
+    background-color: #007bff;
     border-radius: 50px;
     font-weight: bold;
-    width: 150px;
-    height: 40px;
+    width: fit-content;
+    height: fit-content;
     text-align: center;
     margin-left: 1300px;
-    padding-top: 2px;
     font-family: 'PT Serif', serif;
 }
-.LGpos:hover{
-    background-color: black;
-    color: #007bff;
-    text-shadow: 0 0 0 ;
-    border: 2px solid #007bff;
+
+.LAtag{
+  text-decoration: none;
+  color: #000;
+}
+.LAtag:hover{
+  text-decoration: none;
+  color: white;
+  text-shadow: 2px 2px 2px #000;
 }
 
 
-/*Nav-Bar*/
+
+/*************************************NAVIGATION-BAR************************************/
 .Npos{
     margin-top: 10px; 
     font-family: 'Montserrat', sans-serif;  
@@ -77,11 +96,11 @@
 }
 
 .navbar1 {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .5rem 0rem .5rem 59rem;
+    padding: .5rem 0rem .5rem 0rem;
+    
 } 
 
 .nav-link:hover{
@@ -92,17 +111,55 @@
     padding-left: 4rem;
 }
 
-/*******DROP DOWN LIST ******************/
+.newClass{
+  background-color: red;
+}
+
+
+/***************************** DROP DOWN LIST ***************************/
 #dropdown-menu{
     background-color: #212529;
     box-shadow: 6px 6px 3px 3px rgb(109, 109, 109);
 }
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  padding: .5rem 0;
+  margin: .125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, .15);
+  border-radius: .25rem;
+}
+
+
 #dropdown-item{
     color: #007bff;
     font-family: 'Montserrat', sans-serif;  
 }
 
-/****Content*******************/
+.dropdown-item {
+  display: block;
+  /* height: auto; */
+  height: 50px;
+  padding: 0rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  background-color: transparent;
+}
+
+
+/**********************************Content******************************************/
 .CNpos{
   margin-top: 40px;
 }
@@ -111,10 +168,16 @@
   font-family: 'Merriweather', sans-serif;
 }
 
+.CNpos.CNstyle p{
+   font-size: 18px;
+}
 
 
-/*CARD SECTION*/
-/******Cardheading************/
+
+/*********************************EVENTS FOR REGISTRATION***********************/
+/****************************CARD SECTION********************/
+
+/**************** Cardheading ************/
 
 
 .CTpos{
@@ -124,24 +187,36 @@
     text-decoration: underline;
 }
   
-/*********CARDS*********/
+/*********************CARDS******************/
 
+/* the top most element position */
 .MCpos{
     margin-top: 70px;
 }
 
+/* all other cards position accept the last one */
 .Cpos{
     margin-bottom: 40px;
 }
+
+/*the position of all the blocks */
+/*offset-md-2  // could also be used */
+.MCpos .CARDpos {
+  margin: auto;
+}
+
+/* last item position */
 .CLpos{
     margin-bottom: 240px;
 }
+
 .card-header1{
     font-family: 'Nunito', sans-serif;
     padding: .75rem 1.25rem;
     margin-bottom: 0;
     height: 100px;
-    background-color: #212529;
+    background-color: #000000;
+    /* background-color: #212529; */
     box-shadow: 6px 6px 3px 3px rgb(109, 109, 109);
 }
 
@@ -150,11 +225,16 @@
   margin-bottom: 0;
 }
 
-
-/*DATE*********************************/
-.apos{
-  display: inline;
+.Cpos .card-header1 a:hover {
+  text-decoration: none;
 }
+
+.CLpos .card-header1 a:hover {
+  text-decoration: none;
+}
+
+/*****************DATE*********************************/
+
 .date {
   font-family: 'PT Serif', serif;
   text-decoration: none;
@@ -166,24 +246,15 @@
 
 
 
-/******************FOOTER******************/
 
-.footer-widget p {
-    margin-bottom: 27px;
-}
-p {
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
-    line-height: 28px;
-}
 
+/***************** ***********  the top and bottom line animation SINGLE BAR************************/
  .AnimateTop {
    width: 14px;
    height: 5px;
    background: #fff;
    position: relative;
-   animation: mymove 4s infinite;    /*JavaScript syntax:	object.style.animation="mymove 5s infinite"*/
-                                        /*animatable attributes of CSS*/
+   animation: mymove 4s infinite;    
  }
 
  @keyframes mymove {
@@ -191,13 +262,20 @@ p {
      left: 0px;
    }
    to {
-     left: 1510px;
+     left: 1505px;
    }
  }
 
+
+ /*************TOP LINE POSITION SINLE BAR **************/
  #T-A-line {
    margin-top: 100px;
  }
+
+
+ /**************************DOUBLE BAR ANIMATION *****************/
+
+ /*this one is the background to carry out the animation*/
 
  .animate-border {
   position: relative;
@@ -207,52 +285,74 @@ p {
   background: #007bff;
  } 
 
+ /*content which comes after the background*/
+ /*but we hvae specified position:absolute */
+ /*therefore it overlaps the other */
+ /*conatains the description and properties of the animation*/
+ 
 .animate-border:after {
+
+  /* imp attrinbute position:absolute */
+
   position: absolute;
-  content: "";                                             /*Content also can be added*/
+  content: "";
+  /*Content also can be added*/
   width: 35px;
   height: 3px;
   border-left: 10px solid #fff;
   border-right: 10px solid #fff;
-  -webkit-animation: animborder 2s linear infinite;         /* Animatable Attributes of -webkit-animation 43.0 or 4.0;*/
+  animation: animborder 2s linear infinite; 
   animation: animborder 2s linear infinite;
+  /*-webkit-animation    // works the same we use to be specific */
 }
 
-/* Refer Animation properties of @-webkit-keyframes */
-
 @keyframes animborder {
-  0% {
-    -webkit-transform: translateX(0px);
-    transform: translateX(0px); }
+
+  /* 0% { */
+    /* -webkit-transform: translateX(0px); */
+    /* transform: translateX(0px); } */
+
   100% {
-    -webkit-transform: translateX(400px);
-    transform: translateX(400px); } 
+    transform: translateX(400px);
+    transform: translateX(400px); 
+       } 
+  }
+
+  /* The webkit extension helps you target specific browsers. 
+  In this case, Google Chrome and Safari. Generally the standard
+   transform (in this case) will be used however this just ensures
+    all browsers will be compatible. */
+
+
+
+
+  /******************************************FOOTER**********************************/
+
+  .footer-widget p {
+    margin-bottom: 27px;
+  }
+
+  p {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 28px;
   }
 
 
-
-
-
-
-/******FOOTER**********/
+/******FOOTER  positions of all BLOCKS **********/
 .dk-footer {
   padding: 25px 0 0;
   background-color: #151414;
   position: relative;
   z-index: 2; 
 }
+
+/*   contact us COLOUMN POSITIONING   */
 .dk-footer .contact-us {
     margin-top: 0;
     margin-bottom: 10px;
-    padding-left: 80px; 
+    padding-left: 40px; 
   }
-.dk-footer .contact-us .contact-info {
-      margin-left: 50px;
-     }
-
-.dk-footer .contact-us.contact-us-last {
-      margin-left: -80px;
-     }
 
 .dk-footer .contact-icon i {
     font-size: 24px;
@@ -262,32 +362,39 @@ p {
    }
 
 
-   /*****floating box*******/
+   
+   /**************************FLOATING BOX********************/
    
 .dk-footer-box-info {
   position: absolute;
-  top: -90px;
+  top: 0px;
   background: #202020;
-  padding: 0px 40px 40px 40px;
+  padding: 20px 40px 40px 40px;
   z-index: 2; 
 }
+
+
+/*FOLLOW US   // text-design */
 .dk-footer-box-info .footer-social-link h3 {
     color: #fff;
     font-size: 24px;
     margin-bottom: 25px; 
 }
+
+/* to aviod the default list designs */
 .dk-footer-box-info .footer-social-link ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
  }
 
+ /*alligns all the icons in a single line */
 .dk-footer-box-info .footer-social-link li {
     display: inline-block; 
   }
 
+  /* each links design */
 .dk-footer-box-info .footer-social-link a i {
-    display: block;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -297,31 +404,36 @@ p {
     color: #fff;
    }
     
-.dk-footer-box-info .footer-social-link a i.fa-facebook {
+
+   /* dk-footer-box-info .footer-social-link a i.    // to be specific  */
+.fa-facebook {
       background-color: #3B5998;
      }
-.dk-footer-box-info .footer-social-link a i.fa-twitter {
+.fa-twitter {
       background-color: #55ACEE; 
     }
-.dk-footer-box-info .footer-social-link a i.fa-google-plus {
+.fa-google-plus {
       background-color: #DD4B39; 
     }
-.dk-footer-box-info .footer-social-link a i.fa-linkedin {
+.fa-linkedin {
       background-color: #0976B4; 
     }
-.dk-footer-box-info .footer-social-link a i.fa-instagram {
+.fa-instagram {
       background-color: #B7242A; 
     }
 
     
-    /*************/
+    /*****************************************************/
 
 
+
+/*The final blue animated border and upper body margin*/
 .footer-awarad {
-  margin-top: 240px;                      /*The final blue animated border and upper body margin*/
+  margin-top: 240px;                      
 }
 
-  .footer-awarad p {                      /*BMSCE ARENA bottom title*/
+/*BMSCE ARENA bottom title*/
+  .footer-awarad p {                      
     color: #fff;
     font-size: 24px;
     font-weight: 700;
@@ -329,19 +441,28 @@ p {
     padding-top: 15px; 
   }
 
-.footer-info-text {                      /* the text below it */
-  margin: 26px 0 32px;
+   /* the text below it */
+.footer-info-text {                     
+  margin: px px;
  }
 
-.footer-left-widget {                  /* the 2nd and 3rd column*/
+ /* the 2nd and 3rd column*/
+.footer-left-widget {                  
   padding-left: 80px; 
 }
-
-.footer-widget .section-heading {         /*space in btw head and info */
-  margin-bottom: 35px;  
+.footer-rigth-widget{
+  padding-left: 90px;
 }
 
-.footer-widget h3 {                       /*Useful links and Get in Touch with us*/
+/*space in btw head and info */
+/*.footer-widget .section-heading {         
+  margin-bottom: 35px;  
+}*/
+
+
+
+/****Useful links*********and************Get in Touch with us**********/
+.footer-widget h3 {                       
   font-size: 24px;
   color: #fff;
   position: relative;
@@ -349,7 +470,8 @@ p {
   max-width: fit-content;
  }
 
-.footer-widget ul {                        /*List Designs*/
+ /*List Designs*/
+.footer-widget ul {                        
   width: 50%;
   float: left;
   list-style: none;
@@ -357,33 +479,44 @@ p {
   padding: 0; 
 }
 
-.footer-widget li {                       /*List items*/
+/*List items*/
+.footer-widget li {                       
   margin-bottom: 18px;
  }
 
+
+/*Color transition after hovering on links*/
 .footer-widget a {    
   color: #878787;           
-  -webkit-transition: all 0.3s;           /*Color transition after hovering on links*/
-  -o-transition: all 0.3s;
   transition: all 0.3s; 
+
+  /* to be specific to websites */
+    /* -webkit-transition: all 0.3s; */
+    /* -o-transition: all 0.3s; */
+
 }
 
+
+/*Gets this color after hovering*/
   .footer-widget a:hover {     
-    color: #007bff;                     /*Gets this color after hovering*/
+    color: #007bff;                     
   }
 
-  .dk-footer-form input[type=email] {      /*Form input box*/
+  /************************Form input box SEND US MAIL******************/
+  .dk-footer-form input[type=email] {   
+    color: #fff;   
     padding: 14px 28px;
     border-radius: 50px;
     background: #2E2E2E;
     border: 1px solid #2E2E2E;
    }
 
-  .dk-footer-form button[type=submit] {        /*Send button icon */
+   /*Send button icon */
+  .dk-footer-form button[type=submit] {        
     position: absolute;
     top: 0;
     right: 0;
-    padding: 12px 24px 0px 17px;
+    padding: 6px 24px 6px 17px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     border: 1px solid #007bff;
@@ -391,11 +524,15 @@ p {
     color: #fff; 
   }
 
-  .dk-footer-form button:hover {              /*Cursor changes to pointer after hovering */
+  /*Cursor changes to pointer after hovering */
+  .dk-footer-form button:hover {              
     cursor: pointer; 
   }
 
-/*******Contact Us ******/
+
+
+
+/*****************************Contact Us ***************************/
 .contact-us {
   position: relative;
   z-index: 2;
@@ -427,9 +564,9 @@ p {
 
 
 
-   /*Copyright 2020*/
+   /*************THE END   Copyright 2020**************/
 .copyright {
-  padding: 18px 0;
+  padding: 13px 0;
   margin-top: 0px;
   background-color: #202020;
  }
