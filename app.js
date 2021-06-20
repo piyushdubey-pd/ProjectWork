@@ -14,30 +14,25 @@ app.use(express.static("public"));
 
 
 
+const connection = mysql.createConnection({
+    host:"localhost",
+    port:3308,
+    user:"root",
+    password:"",
+    database: "bmscear_db"
+});
+connection.connect(function(error) {
+    if(error) throw error;
+    else console.log("Connected to DB successfully")
+});
 
 
-// const connection = mysql.createConnection({
-//     host:"localhost",
-//     user:"root",
-//     password:"",
-//     database: "bmscear_db"
-// });
-
-// connection.connect(function(error) {
-//     if(error) throw error;
-//     else console.log("Connected to DB successfully")
-// });
-
-
-
-// var transporter = nodemailer.createTransport({
-//     service:'gmail',
-//     auth:{
-//         user:'bmscearena@gmail.com',                                                                                  pass:'arenabmsce'
-//     }
-// });
-
-
+var transporter=nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+        user:'bmscearena@gmail.com',                                                                                  pass:'arenabmsce'
+    }
+});
 
 
 
@@ -51,6 +46,40 @@ app.get("/" , function(req,res){
 var usn;
 var password;
 
+
+// 1
+
+
+//  app.post("/eventsList", function(req,res) {
+
+//     usn = req.body.usn;   
+//     password = req.body.password;
+
+//     console.log(usn);
+//     console.log(password);
+
+//     if (usn==""&&password=="") {
+//         res.render("login",{title:" Log-In", usnerror:"*****this is required*****" , passworderror:"*****This is required*****" , usnvalue:"" , passwordvalue:"",loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
+//         //res.redirect("/login",{title:" Log-In", usnerror:"*****this is required*****" , passworderror:"*****This is required*****" , usnvalue:"" , passwordvalue:""});
+//     } 
+//     else if(usn==""){
+//         res.render("login",{title:" Log-In",usnerror:"*****this is required*****", passworderror:"" , usnvalue:"" , passwordvalue:password, loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
+//     }
+//     else if(password==""){
+//         res.render("login",{title:" Log-In",usnerror:"", passworderror:"*****this is required*****" , usnvalue:usn, passwordvalue:"", loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
+//     }
+//     else{
+//     res.render("eventsList", {title:"-events list", loginName:usn , loginAddress:"eventsList"});
+//     }
+
+// });
+
+
+
+//2
+
+
+
  app.post("/eventsList", function(req,res) {
 
     usn = req.body.usn;   
@@ -60,33 +89,31 @@ var password;
     console.log(password);
 
     if (usn==""&&password=="") {
-        res.render("login",{title:" Log-In", usnerror:"*****this is required*****" , passworderror:"*****This is required*****" , usnvalue:"" , passwordvalue:"",loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
-        //res.redirect("/login",{title:" Log-In", usnerror:"*****this is required*****" , passworderror:"*****This is required*****" , usnvalue:"" , passwordvalue:""});
+        res.render("login",{title:" Log-In", usnerror:"*****this is required*****" , passworderror:"*****This is required*****" , usnvalue:"" , passwordvalue:"" , loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
     } 
     else if(usn==""){
-        res.render("login",{title:" Log-In",usnerror:"*****this is required*****", passworderror:"" , usnvalue:"" , passwordvalue:password, loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
+        res.render("login",{title:" Log-In",usnerror:"*****this is required*****", passworderror:"" , usnvalue:"" , passwordvalue:password , loginAddress:"eventsList",loginName:"ADMIN LOGIN" });
     }
     else if(password==""){
-        res.render("login",{title:" Log-In",usnerror:"", passworderror:"*****this is required*****" , usnvalue:usn, passwordvalue:"", loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
+        res.render("login",{title:" Log-In",usnerror:"", passworderror:"*****this is required*****" , usnvalue:usn, passwordvalue:"" , loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
     }
-    else{
-
-        // connection.query("select * from user_login where usn= ? and passw = ?",[usn,password],function(error,results,fields){
-        //     if(results.length > 0)
-        //     {
-                res.render("eventsList", {title:"-events list", loginName:usn , loginAddress:"eventsList"});
-        //     }
-        //         else
-        //     {
-                // res.render("login",{title:" Log-In", usnerror:"*****Incorrect Username or Password*****" , passworderror:"" , usnvalue:"" , passwordvalue:"", loginName:"ADMIN LOGIN" , loginAddress:"adminLogin"});
-            // }
-                // res.end();
-        // });
-
-    // res.render("eventsList", {title:"-events list", loginName:usn , loginAddress:"eventsList"});
+    else {
+        connection.query("select * from user_login where usn= ? and passw = ?",[usn,password],function(error,results,fields){
+            if(results.length > 0)
+            {
+                res.render("eventsList", {title:"-events list",loginName:usn , loginAddress:usn,loginName:"ADMIN LOGIN"});
+            }
+                else
+            {
+                res.render("login",{title:" Log-In", usnerror:"*****Incorrect Username or Password*****" , passworderror:"" , usnvalue:"" , passwordvalue:"" , loginName:"ADMIN LOGIN" , loginAddress:"adminLogin"});
+            }
+                res.end();
+        });
     }
-
 });
+
+
+
 
 
 
@@ -124,62 +151,8 @@ M_ail ="";
 })
 
 
-//POST ==>FORM RESPONSE
-// app.post("/response" , function(req,res){
-
-// //     F_name ="";
-// // L_name ="";
-// // Y_ear ="";
-// // U_sn ="";
-// // B_ranch ="";
-// // M_ail ="";
-
-//     F_name = req.body.fname;
-//     L_name = req.body.lname;
-//     Y_ear = req.body.year;
-//     U_sn = req.body.usn;
-//     B_ranch = req.body.branch;
-//     M_ail = req.body.mail;
-
-//     if(F_name==""||L_name==""||Y_ear==""||U_sn==""||B_ranch==""||M_ail==""){
-//         res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Please fill all the user credentials***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginAddress:"registration",loginName:usn});
-//     }
-//     else{
-//         if(U_sn.length==10){
-
-//             connection.query("select * from user_reg where usn=?",[U_sn],function(error,results,fields){
-//                 console.log(results)
-//                 if(results.length>0)
-//                 res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***User has already registered***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginAddress:"registration",loginName:usn  });
-//                 else
-//                 {
-//                 connection.query("insert into user_reg values(?, ?, ?, ?, ?, ?)",[F_name,L_name,Y_ear,U_sn,B_ranch,M_ail],function(error,results,fields){
-//                 res.render("response", {title:"-Regis_Responsel",loginName:usn , Fname:F_name , Lname:L_name , Year:Y_ear , Usn:U_sn , Branch : B_ranch , Mail:M_ail , loginAddress:"response",loginName:usn});
-//            });
-//         }
-//         });
-
-//             var mailOptions= {
-//                 from : 'bmscearena@gmail.com',
-//                 to: M_ail,
-//                 subject:'Successfull Registration',
-//                 text:'Congratulations on successfully registering in this event. \n All the best'
-//             };
-
-//             transporter.sendMail(mailOptions,function(error, info){
-//                 if(error)
-//                 console.log(error);
-//                 else
-//                 console.log('Email sent: '+info.response);
-//             });
-//         }
-//         else
-//         res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Incorrec USN kidnly check***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn  , loginAddress:"registration",loginName:usn});       
-// }
-// });
 
 
-// POST ===> RESPONSE
 
 app.post("/response" , function(req,res){
 
@@ -198,13 +171,71 @@ app.post("/response" , function(req,res){
     M_ail = req.body.mail;
 
     if(F_name==""||L_name==""||Y_ear==""||U_sn==""||B_ranch==""||M_ail==""){
-        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Please fill all the user credentials***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn,loginName:usn,loginAddress:"response"});
+        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Please fill all the user credentials***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn,loginAddress:"response"});
     }
     else{
-    res.render("response", {title:"-Regis_Responsel",loginName:usn , Fname:F_name , Lname:L_name , Year:Y_ear , Usn:U_sn , Branch : B_ranch , Mail:M_ail,loginAddress:"response"});
+        if(U_sn.length==10){
+            connection.query("select * from user_reg where usn=?",[U_sn],function(error,results,fields){
+                console.log(results)
+                if(results.length>0)
+                res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***User has already registered***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn   ,  loginAddress:"response" });
+                else
+                {
+                connection.query("insert into user_reg values(?, ?, ?, ?, ?, ?)",[F_name,L_name,Y_ear,U_sn,B_ranch,M_ail],function(error,results,fields){
+                res.render("response", {title:"-Regis_Responsel",loginName:usn , Fname:F_name , Lname:L_name , Year:Y_ear , Usn:U_sn , Branch : B_ranch , Mail:M_ail  , loginName:usn , loginAddress:"response"});
+           });
+        }
+        });
+            var mailOptions= {
+                from : 'bmscearena@gmail.com',
+                to: M_ail,
+                subject:'Successfull Registration',
+                text:'Congratulations on successfully registering in this event. \n All the best'
+            };
+            transporter.sendMail(mailOptions,function(error, info){
+                if(error)
+                console.log(error);
+                else
+                console.log('Email sent: '+info.response);
+            });
+        }
+        else
+        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Incorrec USN kidnly check***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn , loginAddress:"response"});       
 }
-    
 });
+
+
+
+
+
+
+
+// // POST ===> RESPONSE
+
+// app.post("/response" , function(req,res){
+
+// //     F_name ="";
+// // L_name ="";
+// // Y_ear ="";
+// // U_sn ="";
+// // B_ranch ="";
+// // M_ail ="";
+
+//     F_name = req.body.fname;
+//     L_name = req.body.lname;
+//     Y_ear = req.body.year;
+//     U_sn = req.body.usn;
+//     B_ranch = req.body.branch;
+//     M_ail = req.body.mail;
+
+//     if(F_name==""||L_name==""||Y_ear==""||U_sn==""||B_ranch==""||M_ail==""){
+//         res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Please fill all the user credentials***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn,loginName:usn,loginAddress:"response"});
+//     }
+//     else{
+//     res.render("response", {title:"-Regis_Responsel",loginName:usn , Fname:F_name , Lname:L_name , Year:Y_ear , Usn:U_sn , Branch : B_ranch , Mail:M_ail,loginAddress:"response"});
+// }
+    
+// });
 
 
 
@@ -213,10 +244,13 @@ app.post("/response" , function(req,res){
 // *********************************************    ADMIN    **************************************************************
 
 
+
+
+
+//  ADMIN Log-in
 app.get("/adminLogin" ,function(req,res){
     res.render("AdminLogin", { title:" -ADMIN LOGIN", adminerror:"" , adminpassworderror:"" , adminvalue:"" , adminpasswordvalue:"", loginName:"STUDENT LOGIN" ,loginAddress:""});
 });
-
 
 
 
@@ -231,6 +265,8 @@ app.get("/AdmineventsList", function(req,res){
 var Aname;
 var Apassword;
 
+
+// ADMIN Home-page // adding events
 app.post("/AdmineventsList" , function(req,res){
      Aname = req.body.adminname;
      Apassword = req.body.adminpassword;
@@ -265,6 +301,8 @@ var D_ueDate;
 var E_ventDetails;
 
 
+
+// ADMIN  // added event successfully
 app.post("/AdminAddedEvent", function(req,res){
 
 
@@ -289,6 +327,11 @@ app.post("/AdminAddedEvent", function(req,res){
 });
 
 
+
+app.get("/AdmineventsList1" , function(req,res){
+    res.render("AdmineventsList1",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:"" , EventNameValue:"" , StartDateValue:"" , DueDateValue:"" , EventDetailsValue:"",EVEerror:"" });
+
+})
 
 
 
