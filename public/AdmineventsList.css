@@ -11,8 +11,10 @@
 }
 
 .contact-info {
-    margin-top: 10%;
     margin-left: 25px;
+}
+.AdminInfo{
+    margin-top: 35px;
 }
 
 .contact-info img {
