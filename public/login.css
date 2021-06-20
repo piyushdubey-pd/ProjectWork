@@ -81,7 +81,7 @@ padding : 80px 100px 80px 100px ;
 
 .FTpos{
      background: linear-gradient(to top right, rgb(0, 0, 0) 40%, #007bff);
-    height: 60px;
+    height: 50px;
     border-radius: 100px;
     margin-left:20px;
     margin-right: 20px;
@@ -90,10 +90,14 @@ padding : 80px 100px 80px 100px ;
     text-shadow: 3px 2px 1px #000000;
 }
 .FTstyle{
-    padding-top: 15px;
+    padding-top: 10px;
     letter-spacing: 1.5px;
+    font-size: 15px;
     font-weight: bold;
-    font-family: 'Merriweather', serif; 
+    font-family: 'Montserrat',
+    sans-serif;
+
+    /* font-family: 'Merriweather', serif;  */
 }
 /***************************************/
 
@@ -125,7 +129,7 @@ padding : 80px 100px 80px 100px ;
 
 /*first block of content*/
 .contTop{
-    margin-top: 100px
+    margin-top: 80px;
 }
 
 /*style*/
@@ -137,13 +141,13 @@ padding : 80px 100px 80px 100px ;
 
 /*content title*/
 .ContT{
-    font-size: 25px;
+    font-size: 20px;
 }
 
 /*inside content*/
 .ConTIn{
-    font-size: 17px;
-    padding-top: 15px;
+    font-size: 15px;
+    padding-top: 0px;
 }
 
 /*last content*/

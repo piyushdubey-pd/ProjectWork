@@ -20,15 +20,18 @@
  }
 .TFpos{
     margin-top: 100px;
+    margin-left: 50px;
 }
 
 .CTFpos{
     margin-top: 200px;
+    margin-left: 80px;
+
 }
 
 .CFpos {
     margin-top: 150px;
-    margin-left: 40px;
+    margin-left: 80px;
 }
 
 .CR2pos{
@@ -92,6 +95,7 @@ sans-serif;
 .dotPos {
     text-align: center;
     margin-top: 100px;
+    margin-left: 50px;
 }
 .fapos{
     padding: 0px 20px 0px 20px;
