@@ -355,20 +355,23 @@ app.post("/AdminAddedEvent", function(req,res){
 
 var upcoming_events;
 connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and reg_start>curdate()",function(error,results,fields){
-    upcoming_events=results;
+    upcoming_events=JSON.stringify(results);
     console.log("UP ERROR : "+error);
-    console.log(results);
+    // results=JSON.parse(JSON.stringify(results))
+    // doStuffwithTheResult(results); 
+    // console.log(results);
+    console.log(upcoming_events);
 });
-console.log(upcoming_events);
 
 var events_for_reg;
 connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate())",function(error,results,fields){
-    events_for_reg=results;
+    events_for_reg=JSON.stringify(results);
     console.log("AVAREG ERROR : "+error);
-    console.log(results);
-});
-console.log(events_for_reg);
+    // results=JSON.parse(JSON.stringify(results))
+    // doStuffwithTheResult(results); 
+    console.log(events_for_reg);
 
+});
 
 app.listen("3000",function(){
     console.log("Successfully Running");
