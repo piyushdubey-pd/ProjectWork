@@ -182,7 +182,11 @@ app.get("/registration/:Event_forms" , function(req,res){
 
     //with query get the evename and pass it
     let Event_Name = "";
-    
+    let Event_RegisStart = "";
+    let Event_RegisDue = "";
+    let Event_Date = "";
+
+
 
 
 
