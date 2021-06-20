@@ -282,7 +282,7 @@ app.post("/AdmineventsList" , function(req,res){
     }else if(Apassword==""){
         res.render("AdminLogin",{title:" -ADMIN LOGIN", adminerror:"" , adminpassworderror:"*****this is required*****" , adminvalue:Aname, adminpasswordvalue:"", loginName:"STUDENT LOGIN" ,loginAddress:""});
     }else{
-    res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:"" , EventNameValue:"" , StartDateValue:"" , DueDateValue:"" , EventDetailsValue:"",EVEerror:"" });
+    res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:"" , EventNameValue:"" , StartDateValue:"" , DueDateValue:"" , EventDetailsValue:"" , EVEerror:"" ,EveDateValue:""});
     }
 
 });
@@ -298,11 +298,12 @@ var E_ventId;
 var E_ventName;
 var S_tartDate;
 var D_ueDate;
+var E_ventDate;
 var E_ventDetails;
 
 
 
-// ADMIN  // added event successfully
+// ADMIN  // added event successfully //response
 app.post("/AdminAddedEvent", function(req,res){
 
 
@@ -310,8 +311,8 @@ app.post("/AdminAddedEvent", function(req,res){
     E_ventName = req.body.EventName;
     S_tartDate = req.body.StartDate;
     D_ueDate = req.body.DueDate; 
+    E_ventDate = req.body.EveDate;
     E_ventDetails = req.body.EventDetails;
-
 
     console.log(E_ventId);
     console.log(E_ventName);
@@ -319,19 +320,15 @@ app.post("/AdminAddedEvent", function(req,res){
     console.log(E_ventDetails);
 
 
-    if(E_ventId==""||E_ventName==""||S_tartDate==""||D_ueDate==""||E_ventDetails==""){
-        res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:E_ventId , EventNameValue:E_ventName , StartDateValue:S_tartDate , DueDateValue:D_ueDate , EventDetailsValue: E_ventDetails , EVEerror:"***** Please fill all the details *****"})
+    if(E_ventId==""||E_ventName==""||S_tartDate==""||D_ueDate==""||E_ventDetails==""||E_ventDate==""){
+        res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:E_ventId , EventNameValue:E_ventName , StartDateValue:S_tartDate , DueDateValue:D_ueDate , EventDetailsValue: E_ventDetails ,EveDateValue:E_ventDate, EVEerror:"***** Please fill all the details *****"})
     }else{
-    res.render("AdminAddedEvent",{title:" -Event_Added",  loginName:Aname , loginAddress:"AdminAddedEvent",EVENTname:E_ventName , EVENTid:E_ventId , STARTdate: S_tartDate , DUEdate: D_ueDate , EVENTdetails: E_ventDetails });
+    res.render("AdminAddedEvent",{title:" -Event_Added",  loginName:Aname , loginAddress:"AdminAddedEvent",EVENTname:E_ventName , EVENTid:E_ventId , STARTdate: S_tartDate , DUEdate: D_ueDate , EVENTdetails: E_ventDetails , EVEdate  :E_ventDate });
     }
 });
 
 
 
-app.get("/AdmineventsList1" , function(req,res){
-    res.render("AdmineventsList1",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:"" , EventNameValue:"" , StartDateValue:"" , DueDateValue:"" , EventDetailsValue:"",EVEerror:"" });
-
-})
 
 
 
