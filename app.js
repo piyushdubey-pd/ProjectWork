@@ -85,8 +85,8 @@ var password;
     usn = req.body.usn;   
     password = req.body.password;
 
-    console.log(usn);
-    console.log(password);
+    // console.log(usn);
+    // console.log(password);
 
     if (usn==""&&password=="") {
         res.render("login",{title:" Log-In", usnerror:"*****this is required*****" , passworderror:"*****This is required*****" , usnvalue:"" , passwordvalue:"" , loginAddress:"eventsList",loginName:"ADMIN LOGIN"});
@@ -99,6 +99,20 @@ var password;
     }
     else {
         connection.query("select * from user_login where usn= ? and passw = ?",[usn,password],function(error,results,fields){
+
+            // console.log(results.usn);
+            // console.log((results[0])[0].usn);
+
+            // const result = Object.values(JSON.parse(JSON.stringify(results)));
+
+                var string=JSON.stringify(results);
+                 console.log(string);
+                 var json =  JSON.parse(string);
+                // to get one value here is the option
+                 console.log(json[0].name);
+
+            
+
             if(results.length > 0)
             {
                 res.render("eventsList", {title:"-events list",loginName:usn , loginAddress:usn,loginName:"ADMIN LOGIN"});
