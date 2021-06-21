@@ -248,37 +248,37 @@ app.post("/registration/response/:Event_response" , function(req,res){
     M_ail = req.body.mail;
 
     if(F_name==""||L_name==""||Y_ear==""||U_sn==""||B_ranch==""||M_ail==""){
-        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Please fill all the user credentials***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn,loginAddress:"response"});
+        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Please fill all the user credentials***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn,  Regis_Ename : "" , Regis_Eid : "", loginAddress:"response"});
     }
     else{
         if(U_sn.length==10){
             connection.query("select * from user_reg where usn=? && event_id=?",[U_sn,Eventid_response],function(error,results,fields){
                 console.log(results)
                 if(results.length>0)
-                res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***User has already registered***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn   ,  loginAddress:"response" });
+                res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***User has already registered***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn   , Regis_Ename : "" , Regis_Eid : "", loginAddress:"response" });
                 else
                 {
-                connection.query("insert into user_reg values(?, ?, ?, ?, ?, ?,?)",[F_name,L_name,Y_ear,B_ranch,M_ail,U_sn,Eventid_response],function(error,results,fields){
-                res.render("response", {title:"-Regis_Responsel",loginName:usn , Fname:F_name , Lname:L_name , Year:Y_ear , Usn:U_sn , Branch : B_ranch , Mail:M_ail  , loginName:usn , loginAddress:"response"});
-                var mailOptions= {
-                from : 'bmscearena@gmail.com',
-                to: M_ail,
-                subject:'Successfull Registration',
-                text:'Congratulations on successfully registering in this event. \n All the best'
-            };
-            transporter.sendMail(mailOptions,function(error, info){
-                if(error)
-                console.log(error);
-                else
-                console.log('Email sent: '+info.response);
-            });
+                    connection.query("insert into user_reg values(?, ?, ?, ?, ?, ?,?)",[F_name,L_name,Y_ear,B_ranch,M_ail,U_sn,Eventid_response],function(error,results,fields){
+                    res.render("response", {title:"-Regis_Responsel",loginName:usn , Fname:F_name , Lname:L_name , Year:Y_ear , Usn:U_sn , Branch : B_ranch , Mail:M_ail  , loginName:usn , loginAddress:"response"});
+                    var mailOptions= {
+                    from : 'bmscearena@gmail.com',
+                    to: M_ail,
+                    subject:'Successfull Registration',
+                    text:'Congratulations on successfully registering in this event. \n All the best'
+                    };
+                    transporter.sendMail(mailOptions,function(error, info){
+                    if(error)
+                    console.log(error);
+                    else
+                    console.log('Email sent: '+info.response);
+                });
             });
         }
         });
             
         }
         else
-        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Incorrec USN kidnly check***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn , loginAddress:"response"});       
+        res.render("registration",{title:"-event_Registration",loginName:usn , pptext:"***Incorrect USN kidnly check***" , fnamevalue:F_name ,lnamevalue :L_name,yearvalue :Y_ear , mailvalue :M_ail , branchvalue:B_ranch , usnvalue:U_sn , loginName:usn ,  Regis_Ename : "" , Regis_Eid : "",loginAddress:"response"});       
 }
 });
 
