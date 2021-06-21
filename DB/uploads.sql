@@ -2,7 +2,7 @@
 UPDATE `admin_events` SET `event_name` = 'Official cricket team selection for 1st year' WHERE `admin_events`.`event_id` = 1;
 UPDATE `admin_events` SET `event_desc` = 'Inter-college cricket event is being scheduled. So gyus wake up and register for the selection.' WHERE `admin_events`.`event_id` = 1;
 UPDATE `admin_events` SET `event_name` = 'Official basketball team selection for 3st year B.E' WHERE `admin_events`.`event_id` = 2;
-UPDATE `admin_events` SET `event_name` = 'Inter-college cricket event is being scheduled. So gyus wake up and register for the selection.' WHERE `admin_events`.`event_id` = 3;
+UPDATE `admin_events` SET `event_name` = 'Inter-college chess.' WHERE `admin_events`.`event_id` = 3;
 UPDATE `admin_events` SET `event_name` = 'Chess inter-state competation, selection for 2nd year B.E' WHERE `admin_events`.`event_id` = 4;
 UPDATE `admin_events` SET `event_desc` = 'Inter-State chess event is being scheduled. So gyus wake up and register for the selection.' WHERE `admin_events`.`event_id` = 4;
 UPDATE `admin_events` SET `event_desc` = 'Chess tournament, chess live scores, realtime battle etc' WHERE `admin_events`.`event_id` = 3;
