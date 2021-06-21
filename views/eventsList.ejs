@@ -31,20 +31,28 @@
             <!-- col-md-8  and offset-md-2 -->
             <!-- designs the width of the card element-->
 
-
+<% for(var i = 0 ; i < Events_array.length ; i++){ %>
                 <!-- CARD elements begin-->
                     <div class="Cpos">
                         <div class="card-header1">
                         <!-- <a></a>  ==>this behaves as a GET request  -->
-                            <a  href="/registration">     
-                                <h3><b>Official cricket team selection for 1st year B.E </b></h3>
-                                <span class="date">DEC &nbsp;22</span> 
-                                <p class="Secline">Inter-college cricket event is being scheduled. So gyus wake up and register for the selection.</p>
+                            <a  href="/registration/<%=Events_array[i].event_id%>">     
+                                <h3><b><%=Events_array[i].event_name%></b></h3>
+                                <span class="date"><%=Events_array[i].reg_due.substring(8,10)%></span> 
+                                <p class="Secline"><%=Events_array[i].event_desc%></p>
                             </a>
                         </div>
                       </div>
+
+                      <%}%>
   
 
+
+
+
+
+
+<!--
                       <div class="Cpos">
                         <div class="card-header1">
                             <a  href="" >
@@ -109,6 +117,8 @@
                             </a>
                         </div>
                       </div>
+
+                      -->
                       
 
             </div>
@@ -118,4 +128,6 @@
 
  <!--END events registration -->
 
+<div class= "EventListFooter" >
 <%- include("footer")-%>
+</div>
