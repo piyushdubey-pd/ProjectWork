@@ -30,18 +30,21 @@
             <!--offset does the same spacing before the element -->
 
 
+
+<% for(var k = 0 ; k < UpEvents_array.length ; k++){ %>
                   <div class="card1 Cpos">
                                 <div class="card-header1">
                                   <div class="a1">
-                                        <h3 class="h3Style"><b>Chess Inter-College torunament </b></h3>
-                                        <span class="datee" >DEC 20</span>
-                                        <p class="Secline">both boys and girls are  allowed, its going to be held in NITK Surathkal</p>
+                                        <h3 class="h3Style"><b><%= UpEvents_array[k].event_name%></b></h3>
+                                        <span class="datee" ><%= UpEvents_array[k].reg_start.substring(8,10)%></span>
+                                        <p class="Secline"><%= UpEvents_array[k].event_desc%></p>
                                         
                                   </div>
                                 </div>
                            </div>
+                      <% } %>
         
-
+<!--
                      <div class="card1 Cpos">
                         <div class="card-header1">
                           <div class="a1">
@@ -125,7 +128,7 @@
                         </div>
                       </div>
 
-
+                          -->
 
 
            </div>
@@ -136,5 +139,7 @@
 
 
 
-
+<div class= "EventListFooter">
 <%- include("footer")-%>
+  
+</div>
