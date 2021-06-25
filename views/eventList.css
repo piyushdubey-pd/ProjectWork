@@ -269,8 +269,14 @@ a#dropdown-item.dropdown-item{
 /******************************CARDS********************************/
 
 /* the top most element position */
+/* Applied for upcoming events */
 .MCpos{
     margin-top: 70px;
+}
+
+.ACpos{
+    margin-top: 90px;
+
 }
 
 /* all other cards position accept the last one */
@@ -301,10 +307,13 @@ a#dropdown-item.dropdown-item{
     box-shadow: 6px 6px 3px 3px rgb(109, 109, 109);
 }
 
+/* the main content */
 .card-header1 a h3 {
 font-size: 20px;
 letter-spacing: 0.02rem;
 } 
+
+/* the sub conten */
 .card-header1 a p{
 font-size: 15px;
 letter-spacing: 0.02rem;
@@ -420,6 +429,10 @@ letter-spacing: 0.02rem;
 
   .EventListFooter{
     margin-top: 150px;
+  }
+
+  .AdminFooter{
+    margin-top: 200px;
   }
 
   .footer-widget p {
