@@ -27,62 +27,27 @@
 
   <tr>
 
-    <th class="HTopRow">EVENT ID</th>
-    <th class="HTopRow">EVENT NAME</th>
-    <th class="HTopRow">EVENT DESCRIPTION</th>
-    <th class="HTopRow">START DATE</th>
-    <th class="HTopRow">DUE DATE</th>
-    <th class="HTopRow">EVENT DATE</th>
+    <th class="HTopRow col-md-1">EVENT ID</th>
+    <th class="HTopRow col-md-4">EVENT NAME</th>
+    <th class="HTopRow col-md-8">EVENT DESCRIPTION</th>
+    <th class="HTopRow col-md-1">START DATE</th>
+    <th class="HTopRow col-md-1">DUE DATE</th>
+    <th class="HTopRow col-md-1">EVENT DATE</th>
 
 
   </tr>
 
+ <% for (var q = 0 ; q < Data_EventsClosed.length ; q++) { %>
   <tr>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" >Fname</a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" >Fname</a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" >Fname</a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" >Fname</a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" >Fname</a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" >Fname</a></td>
-
+    <td class=""><%=Data_EventsClosed[q].event_id%></td>
+    <td class=""><%=Data_EventsClosed[q].event_name%></td>
+    <td class=""><%=Data_EventsClosed[q].event_desc%></td>
+    <td class=""><%=Data_EventsClosed[q].reg_start.substring(8,10)%></td>
+    <td class=""><%=Data_EventsClosed[q].reg_due.substring(8,10)%></td>
+    <td class=""><%=Data_EventsClosed[q].event_start.substring(8,10)%></td>
   </tr>
 
-  <tr>
-     <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>
-
-    <tr>
-       <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>
-
-    <tr>
-       <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>
-
-    <tr>
-       <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>  
-
+  <% } %>
 
   </table>
 
