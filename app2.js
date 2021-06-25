@@ -45,8 +45,13 @@ app.get("/" , function(req,res){
 });
 
 
-var usn;
-var password;
+
+app.get("/Signup" , function(req,res){
+    res.render("Signup",{title:" Sign-Up",NameValue:"" , UsnValue:"" , EmailValue:"" , PasswordValue:"" , BranchValue:"" , ContactValue:"" , YearValue:"", Errortext :"" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+});
+
+
+
 
 
 // 1
@@ -78,11 +83,13 @@ var password;
 
 
 
-//2
 
+
+//EVENTS POST ==>after LOG-IN
 let Events_array = [] ;
 var events_for_reg = [];
-
+var usn;
+var password;
  app.post("/eventsList", function(req,res) {
 
     
@@ -124,40 +131,91 @@ var events_for_reg = [];
 });
 
 
-// connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate())",function(error,results,fields){
+
+
+
+
+
+var Sup_events_for_reg = [];
+// EVENTS POST ==> SIGN UP
+app.post("/eventsList2" , function(req,res){
+    var S_Name = req.body.SName;
+    var S_Usn   = req.body.SUsn;
+    var S_Email  = req.body.SEmail;
+    var S_Password  = req.body.SPassword;
+    var S_Branch = req.body.SBranch;
+    var S_Contact = req.body.SContact;
+    var S_Year   = req.body.SYear;
+
+    usn = S_Usn;   //to pass the value
+    S_Usn = S_Usn.toUpperCase();
+
+    console.log(S_Name);
+    console.log(S_Usn);
+    console.log(S_Email);
+
+    console.log(S_Email.substring(S_Email.length-12,S_Email.length));
+    console.log(S_Password);
+    console.log(S_Branch);
+    console.log(S_Contact);
+    console.log(S_Year);
     
-//      events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
-// });
-     
-    //  console.log("AVAREG ERROR : "+error);
 
-    //  console.log(events_for_reg[0]);
-    //  Dis_Date = events_for_reg[0].reg_due;
-    //  Dis_ename = events_for_reg[0].event_name;
-    //  Dis_edesc = events_for_reg[0].event_desc;
-    //  Dis_eid = events_for_reg[0].event_id;
-    //  console.log(Dis_Date);
-    //  console.log(Dis_ename);
-    //  console.log(Dis_edesc);
+    var UsnVerify = S_Usn.substring(1,3);
+    console.log(UsnVerify);
+
+    var EmailVerify = S_Email.substring(S_Email.length-12,S_Email.length);
+    // write your query here.................................
+
+    
+    if(S_Name==""||S_Usn==""||S_Email==""||S_Password==""||S_Branch==""||S_Contact==""||S_Year==""){
+    res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Please enter all the Credentials!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+    } 
+    else if(EmailVerify!="@bmsce.ac.in"){
+        res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Please enter the official BMSCE mail id!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+    }
+    else if(UsnVerify!="BM"||S_Usn.length!=10){
+        res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Please enter a valid USN!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+    }
+    else
+    {
+          connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
+               Sup_events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
+                console.log(Sup_events_for_reg);
+            });
+            
+                res.render("eventsList", {title:"-events list",loginName:usn , loginAddress:usn  , Events_array : Sup_events_for_reg });
+               
+    }
+
+    
+} );
 
 
 
 
+// GET ==>events (Log-in)
+connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
+    
+           events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
+    });
 app.get("/eventsList" , function(req,res){
-
-    // connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
     
-    //            events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
-    //     });
-
-
-        connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
-    
-               events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
-        });
-
     res.render("eventsList",{title:"-eventslist", loginName:usn,loginAddress:"eventsList" , Events_array :events_for_reg });
 });
+
+
+// GET ==>events (Sign-in)
+connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
+  
+         Sup_events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
+    });
+app.get("/eventsList2" , function(req,res){
+
+    res.render("eventsList",{title:"-eventslist", loginName:usn,loginAddress:"eventsList" , Events_array : Sup_events_for_reg });
+});
+
+
 
 // app.get("/registration" , function(req,res){
 //     res.render("registration",{title:"-event_Registration",loginName:usn, pptext:"" , fnamevalue:"",lnamevalue :"",yearvalue : "" , mailvalue : "" , branchvalue:"" , usnvalue:"", loginName:usn ,loginAddress:"registration"});
@@ -165,28 +223,18 @@ app.get("/eventsList" , function(req,res){
 
 
 
-
-
-
+// UPCOMING EVENTS
 //run QUERY outside the function for GET   
-    var upcoming_events = [];
-    let UpEvents_array = [];
-
-//  connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and reg_start>curdate()",function(error,results,fields){
-
-//     upcoming_events  =  JSON.parse(JSON.stringify(results));
-//     // console.log(upcoming_events);
-//     });
-
-    
+var upcoming_events = [];
+let UpEvents_array = [];
 connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and reg_start>curdate() ORDER BY admin_events.event_id",function(error,results,fields){
                upcoming_events = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
   
 });
-
 app.get("/upcoming" , function(req,res) {
     res.render("upcoming", {title:"-upcoming",loginName:usn,loginAddress:"upcoming" , UpEvents_array: upcoming_events});
 });
+
 
 
 app.get("/gallery" , function(req,res){
@@ -572,8 +620,14 @@ app.get("/DataViewEventsRegis" , function(req,res){
 
 
 // EVENTS REGIS CLOSED
+var Data_events_closed_reg= [];
+connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (curdate()<reg_start) order by admin_events.event_id",function(error,results,fields){
+    
+               Data_events_closed_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
+        });
+        
 app.get("/DataViewEventsNotRegis" , function(req,res){
-    res.render("DataViewEventsNotRegis",{title:" -DataViewUpEventsRegisClosed",  loginName:Aname , loginAddress:"DataViewEventsNotRegis"} );
+    res.render("DataViewEventsNotRegis",{title:" -DataViewUpEventsRegisClosed",  loginName:Aname , loginAddress:"DataViewEventsNotRegis",  Data_EventsClosed : Data_events_closed_reg} );
 });
 
 
