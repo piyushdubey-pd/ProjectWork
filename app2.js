@@ -657,7 +657,7 @@ app.get("/DataViewAllEvents" , function(req,res){
 
 
 // EVENTS REGIS AVAIALABLE
-connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
+connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<=curdate() and  reg_due>=curdate()) order by admin_events.event_id",function(error,results,fields){
     Data_events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
 });
 app.get("/DataViewEventsRegis" , function(req,res){
@@ -670,7 +670,7 @@ app.get("/DataViewEventsRegis" , function(req,res){
 // EVENTS REGIS CLOSED
 var Data_events_closed_reg= [];
 app.get("/DataViewEventsNotRegis" , function(req,res){
-    connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (curdate()<reg_start) order by admin_events.event_id",function(error,results,fields){
+    connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (curdate()>reg_due) order by admin_events.event_id",function(error,results,fields){
         Data_events_closed_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
         console.log(Data_events_closed_reg);
     res.render("DataViewEventsRegis",{title:" -DataViewUpEventsRegisClosed",  loginName:Aname , loginAddress:"DataViewEventsRegis"  , Data_Events_Reg : Data_events_closed_reg} );
@@ -703,12 +703,18 @@ app.post("/NotifyCreate",function(req,res){
     else if(N_Event_Notify==0){
     res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"Enter the Details!" , SuNotifyTxt:""} );
     }else{
-        if(N_Event_id==0){
-            // ADD to NOTIFY Table (newly created)
+        if(N_Event_id==null){
+            connection.query("insert into gen_notifs VALUES(current_timestamp(),?)",[N_Event_Notify],function(err,res,fld){
+                console.log(err);
+            });
         res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"" , SuNotifyTxt:"Added Succesfully!"} );
 
         }else{
-            // ADD to Notifiaction Tabel (old one where event_id is PK) 
+            // ADD to Notifiaction Tabel (old one where event_id is PK)
+            // no validation needed timestamp dynamic
+            connection.query("insert into notifications VALUES(?,current_timestamp(),?)",[N_Event_id,N_Event_Notify],function(err,res,fld){
+                console.log(err);
+            }); 
         res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"" , SuNotifyTxt:"Added Succesfully!"} );
         }
     }
