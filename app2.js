@@ -32,7 +32,7 @@ connection.connect(function(error) {
 var transporter=nodemailer.createTransport({
     service:'gmail',
     auth:{
-        user:'bmscearena@gmail.com',                                                                                  pass:'arenabmsce'
+        user:'bmscearena@gmail.com',                                                                                  pass:''
     }
 });
 
