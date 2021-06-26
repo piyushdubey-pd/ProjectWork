@@ -13,6 +13,14 @@
     </div>
 
 
+
+
+ <div class="container CNpos CNstyle offset-md-1 " >
+        <p><%=Event_Details%> <span id="EveNamestyle" > "<%=Event_Name%>"</span></p>
+    </div>
+
+
+
 <!-- Tables-->
 
 
@@ -68,66 +76,34 @@
 
 <!-- Table information -->
 
-<div class="container  TApos">
+<div class="fluid-container  TApos">
 
 <table>
 
   <tr>
-
+    <th class="HTopRow">USN</th>
     <th class="HTopRow">FIRST NAME</th>
     <th class="HTopRow">LAST NAME</th>
     <th class="HTopRow">E-MAIL ID</th>
-    <th class="HTopRow">USN</th>
     <th class="HTopRow">BRANCH</th>
     <th class="HTopRow">YEAR</th>
+    <th class="HTopRow">CONTACT NO</th>
 
 
   </tr>
 
+ <% for (var r = 0 ; r < Data_Students.length ; r++) { %>
   <tr>
-    <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
+    <td class="col-md-2"><%=Data_Students[r].usn%></td>
+    <td class="col-md-2"><%=Data_Students[r].fname%></td>
+    <td class="col-md-2"><%=Data_Students[r].lname%></td>
+    <td class="col-md-4"><%=Data_Students[r].email%></td>
+    <td class=""><%=Data_Students[r].branch%></td>
+    <td class="col-md-1"><%=Data_Students[r].yr%> year</td>
+    <td class="col-md-2"><%=Data_Students[r].mobno%></td>
   </tr>
 
-  <tr>
-     <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>
-
-    <tr>
-       <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>
-
-    <tr>
-       <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>
-
-    <tr>
-       <td class="">Fname</td>
-    <td class="">Lname</td>
-    <td class="">Mail</td>
-    <td class="">Usn</td>
-    <td class="">Branch</td>
-    <td class="">Year</td>
-  </tr>  
+  <% } %>
 
 
   </table>
