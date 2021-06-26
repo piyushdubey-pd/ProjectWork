@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 const connection = mysql.createConnection({
     host:"localhost",
-    port:3308,
+    // port:3308,
     user:"root",
     password:"",
     database: "bmsar_db1"
@@ -184,38 +184,39 @@ app.post("/eventsList2" , function(req,res){
     }
     else
     {
-        var mailOptions= {
-            from : 'bmscearena@gmail.com',
-            to: S_Email,
-            subject:'Successfull Registration',
-            text:'Your otp for this session is '+otpg+'. This will be valid for 120 seconds.'
-            };
-            transporter.sendMail(mailOptions,function(error, info){
-            if(error)
-            console.log(error);
-            else
-            console.log('Email sent: '+info.response);
-            });
         // if(otpr==otpg){
-
         // Email verification
         connection.query("select * from user_login where email=?",[S_Email],function(error2,result2,fields2){
+            console.log(result2);
             if(result2.length>0){
                 res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Email id enterd is already registered!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
             }
 
         // usn verification
+            else{
             connection.query("select * from user_login where usn=?",[S_Usn],function(error1,result1,fields1){
                 if(result1.length>0){
                 res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"USN entered is already registered!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
                 }
 
                 else{
+                    var mailOptions= {
+                        from : 'bmscearena@gmail.com',
+                        to: S_Email,
+                        subject:'Successfull Registration',
+                        text:'Your otp for this session is '+otpg+'. This will be valid for 120 seconds.'
+                        };
+                        transporter.sendMail(mailOptions,function(error, info){
+                        if(error)
+                        console.log(error);
+                        else
+                        console.log('Email sent: '+info.response);
+                        });
 
-                    // Data Insertion
+                    // Data Insertion above email only sent when otp successful
                     connection.query("INSERT INTO user_login values(?,?,?,?,?,?,?,?)",[S_Usn,S_Password,S_Email,firstName,lastName,S_Branch,S_Year,S_Contact],function(error,result,fields){
                     console.log("Fname: "+firstName+" Lastname: "+lastName);
-                
+                    console.log(error);
                     console.log('Entered');
                     });
 
@@ -230,11 +231,12 @@ app.post("/eventsList2" , function(req,res){
             // {
             // res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Invalid OTP. Please try again!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
             // }
-                }
-            });
+            }
             });
         }
-});
+            });
+        }
+        });
 
 
 
