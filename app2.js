@@ -18,10 +18,10 @@ app.use(express.static("public"));
 
 const connection = mysql.createConnection({
     host:"localhost",
-    // port:3308,
+    port:3308,
     user:"root",
     password:"",
-    database: "bmsar_db"
+    database: "bmsar_db1"
 });
 connection.connect(function(error) {
     if(error) throw error;
@@ -197,19 +197,33 @@ app.post("/eventsList2" , function(req,res){
             console.log('Email sent: '+info.response);
             });
         // if(otpr==otpg){
+
+        // Email verification
+        connection.query("select * from user_login where email=?",[S_Email],function(error2,result2,fields2){
+            if(result2.length>0){
+                res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Email id enterd is already registered!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+            }
+
+        // usn verification
             connection.query("select * from user_login where usn=?",[S_Usn],function(error1,result1,fields1){
-                if(result1.length>0)
-                res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"User is already registered" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+                if(result1.length>0){
+                res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"USN entered is already registered!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
+                }
+
                 else{
+
+                    // Data Insertion
                     connection.query("INSERT INTO user_login values(?,?,?,?,?,?,?,?)",[S_Usn,S_Password,S_Email,firstName,lastName,S_Branch,S_Year,S_Contact],function(error,result,fields){
                     console.log("Fname: "+firstName+" Lastname: "+lastName);
                 
                     console.log('Entered');
                     });
+
                 connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
                 Sup_events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
                 console.log(Sup_events_for_reg);
                 });
+
                 res.render("eventsList", {title:"-events list",loginName:usn , loginAddress:usn  , Events_array : Sup_events_for_reg });
                 // }
             // else
@@ -217,6 +231,7 @@ app.post("/eventsList2" , function(req,res){
             // res.render("Signup",{title:" Sign-Up",NameValue:S_Name , UsnValue:S_Usn , EmailValue:S_Email , PasswordValue:"" , BranchValue:S_Branch , ContactValue:S_Contact , YearValue:S_Year, Errortext :"Invalid OTP. Please try again!" ,  loginName:"ADMIN LOGIN" , loginAddress: "adminLogin"});
             // }
                 }
+            });
             });
         }
 });
