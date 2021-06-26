@@ -21,7 +21,7 @@
 
 <!-- Table information -->
 
-<div class="container  TApos">
+<div class="fluid-container  TApos">
 
 <table>
 
@@ -39,12 +39,12 @@
 
 <% for (var n=0 ; n < Data_Events_Reg.length ; n++){ %>
   <tr>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" ><%=Data_Events_Reg[n].event_id%></a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" ><%=Data_Events_Reg[n].event_name%></a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" ><%=Data_Events_Reg[n].event_desc%></a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" ><%=Data_Events_Reg[n].reg_start.substring(8,10)%></a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" ><%=Data_Events_Reg[n].reg_due.substring(8,10)%></a></td>
-    <td class=""><a href="https://www.youtube.com/watch?v=Bg8Yb9zGYyA" ><%=Data_Events_Reg[n].event_start.substring(8,10)%></a></td>
+    <td class=""><a href="DataViewEventsRegis/<%=Data_Events_Reg[n].event_id%>" ><%=Data_Events_Reg[n].event_id%></a></td>
+    <td class=""><a href="DataViewEventsRegis/<%=Data_Events_Reg[n].event_id%>" ><%=Data_Events_Reg[n].event_name%></a></td>
+    <td class=""><a href="DataViewEventsRegis/<%=Data_Events_Reg[n].event_id%>" ><%=Data_Events_Reg[n].event_desc%></a></td>
+    <td class=""><a href="DataViewEventsRegis/<%=Data_Events_Reg[n].event_id%>" ><%=Data_Events_Reg[n].reg_start.substring(8,10)%></a></td>
+    <td class=""><a href="DataViewEventsRegis/<%=Data_Events_Reg[n].event_id%>" ><%=Data_Events_Reg[n].reg_due.substring(8,10)%></a></td>
+    <td class=""><a href="DataViewEventsRegis/<%=Data_Events_Reg[n].event_id%>" ><%=Data_Events_Reg[n].event_start.substring(8,10)%></a></td>
   </tr>
 
   <% } %>
