@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 const connection = mysql.createConnection({
     host:"localhost",
-    // port:3308,
+    port:3308,
     user:"root",
     password:"",
     database: "bmsar_db1"
@@ -507,27 +507,23 @@ app.post("/registration/:Event_response" , function(req,res){
 
 
 
-//  ADMIN Log-in
+//ADMIN ==>LOG IN
 app.get("/adminLogin" ,function(req,res){
     res.render("AdminLogin", { title:" -ADMIN LOGIN", adminerror:"" , adminpassworderror:"" , adminvalue:"" , adminpasswordvalue:"", loginName:"STUDENT LOGIN" ,loginAddress:""});
 });
 
 
-
-app.get("/AdmineventsList", function(req,res){
-    res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:E_ventId , EventNameValue:E_ventName , StartDateValue:S_tartDate , DueDateValue:D_ueDate , EventDetailsValue: E_ventDetails ,EveDateValue:E_ventDate ,EVEerror:""})
+// CONTENTS
+app.get("/DataView1" , function(req,res){
+    res.render("DataView1",{title:" -DataView1",  loginName:Aname , loginAddress:"DataView1"} );
 });
-// the value assinged can be left blank as they dont depict any value! unless we have a post route hit atleast once!
 
 
 
-
+//ADMIN ==> POST REQ ==> HOME PAGE ==> DATA VIEW
 var Aname;
 var Apassword;
-
-
-// ADMIN Home-page // adding events
-app.post("/AdmineventsList" , function(req,res){
+app.post("/DataView1" , function(req,res){
      Aname = req.body.adminname;
      Apassword = req.body.adminpassword;
 
@@ -545,7 +541,8 @@ app.post("/AdmineventsList" , function(req,res){
         connection.query("select * from admin_login where user_name= ? and passw = ?",[Aname,Apassword],function(error,results,fields){
         if(results.length > 0)
             {
-                res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:"" , EventNameValue:"" , StartDateValue:"" , DueDateValue:"" , EventDetailsValue:"",EVEerror:"",EveDateValue:"" });
+               res.render("DataView1",{title:" -DataView1",  loginName:Aname , loginAddress:"DataView1"} ); 
+                // res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:"" , EventNameValue:"" , StartDateValue:"" , DueDateValue:"" , EventDetailsValue:"",EVEerror:"",EveDateValue:"" });
             }
         else{
             res.render("AdminLogin",{title:" -ADMIN LOGIN", adminerror:"" , adminpassworderror:"Incorrect user name or Password" , adminvalue:Aname, adminpasswordvalue:"", loginName:"STUDENT LOGIN" ,loginAddress:""});
@@ -555,21 +552,33 @@ app.post("/AdmineventsList" , function(req,res){
     }
 });
 
+
+//ADMIN ==>AFTER ADDING EVENTS
 app.get("/AdminAddedEvent",function(req,res){
     res.render("AdminAddedEvent",{title:" -Event_Added",  loginName:Aname , loginAddress:"AdminAddedEvent"});
 });
 
 
+
+
+
+//ADMIN ==> GET REQ ==>CREATE EVENTS PAGE
+app.get("/AdmineventsList", function(req,res){
+    res.render("AdmineventsList",{title:" -ADMIN AddEvents", loginName:Aname , loginAddress:"AdmineventsList", EventIdvalue:E_ventId , EventNameValue:E_ventName , StartDateValue:S_tartDate , DueDateValue:D_ueDate , EventDetailsValue: E_ventDetails ,EveDateValue:E_ventDate ,EVEerror:""})
+});
+// the value assinged can be left blank as they dont depict any value! unless we have a post route hit atleast once!
+
+
+
+
+
+// ADMIN ==>EVENT ADDED SUCCESSFULLY
 var E_ventId;
 var E_ventName;
 var S_tartDate;
 var D_ueDate;
 var E_ventDate;
 var E_ventDetails;
-
-
-
-// ADMIN  // added event successfully //response
 app.post("/AdminAddedEvent", function(req,res){
 
 
@@ -615,15 +624,18 @@ app.post("/AdminAddedEvent", function(req,res){
 });
 
 
-// CONTENTS
-app.get("/DataView1" , function(req,res){
-    res.render("DataView1",{title:" -DataView1",  loginName:Aname , loginAddress:"DataView1"} );
-});
+
 
 
 // STUDENT DETAILS
+var Student_Details = [];
+connection.query("Select * from user_login ORDER BY usn",function(error,result,fields){
+    Student_Details = JSON.parse(JSON.stringify(result));
+});
 app.get("/DataViewStudent" , function(req,res){
-    res.render("DataViewStudent",{title:" -DataViewStudent",  loginName:Aname , loginAddress:"DataViewStudent"} );
+    console.log(Student_Details);
+
+    res.render("DataViewStudent",{title:" -DataViewStudent",  loginName:Aname , loginAddress:"DataViewStudent" , Data_Students :Student_Details , Event_Details:"" ,Event_Name:"" });
 });
 
 
@@ -632,18 +644,10 @@ app.get("/DataViewStudent" , function(req,res){
 
 // ALL EVENTS
 var All_events = [];
-
-// connection.query("SELECT * FROM event_date, admin_events ",function(error,results,fields){
-
-//     All_events  =  JSON.parse(JSON.stringify(results));
-//     // console.log(upcoming_events);
-//     });
-
 connection.query("select * from admin_events join event_date where admin_events.event_id=event_date.event_id ORDER BY admin_events.event_id",function(error,results1,fields){
 All_events=JSON.parse(JSON.stringify(results1))
     // console.log(All_events);
 });
-
 app.get("/DataViewAllEvents" , function(req,res){
     console.log(All_events);
     res.render("DataViewAllEvents",{title:" -DataViewAllEvents",  loginName:Aname , loginAddress:"DataViewAllEvents" , Data_All_events : All_events} );
@@ -653,11 +657,8 @@ app.get("/DataViewAllEvents" , function(req,res){
 
 
 // EVENTS REGIS AVAIALABLE
-
-
- connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
-
-       Data_events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
+connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (reg_start<curdate() and  reg_due>curdate()) order by admin_events.event_id",function(error,results,fields){
+    Data_events_for_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
 });
 app.get("/DataViewEventsRegis" , function(req,res){
 
@@ -668,21 +669,75 @@ app.get("/DataViewEventsRegis" , function(req,res){
 
 // EVENTS REGIS CLOSED
 var Data_events_closed_reg= [];
-connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (curdate()<reg_start) order by admin_events.event_id",function(error,results,fields){
-    
-               Data_events_closed_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
-        });
-        
 app.get("/DataViewEventsNotRegis" , function(req,res){
-    res.render("DataViewEventsNotRegis",{title:" -DataViewUpEventsRegisClosed",  loginName:Aname , loginAddress:"DataViewEventsNotRegis",  Data_EventsClosed : Data_events_closed_reg} );
+    connection.query("SELECT * FROM event_date, admin_events WHERE event_date.event_id=admin_events.event_id and (curdate()<reg_start) order by admin_events.event_id",function(error,results,fields){
+        Data_events_closed_reg = JSON.parse(JSON.stringify(results));  //MAIN ARRAY
+        console.log(Data_events_closed_reg);
+    res.render("DataViewEventsRegis",{title:" -DataViewUpEventsRegisClosed",  loginName:Aname , loginAddress:"DataViewEventsRegis"  , Data_Events_Reg : Data_events_closed_reg} );
+    // res.render("DataViewEventsNotRegis",{title:" -DataViewUpEventsRegisClosed",  loginName:Aname , loginAddress:"DataViewEventsNotRegis",  Data_EventsClosed : Data_events_closed_reg} );
+        }); 
 });
 
 
 
 // UPCOMING EVENTS
-
 app.get("/DataViewUpEvents" , function(req,res){
     res.render("DataViewUpEvents",{title:" -DataViewUpcomingEvents",  loginName:Aname , loginAddress:"DataViewUpEvents"  , Data_events_upcome : upcoming_events} );
+});
+
+
+//ADMIN ==> CREATE NOTIFUCATION
+var SuNotifyTxt=[];
+app.get("/NotifyCreate",function(req,res){
+    res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"" , SuNotifyTxt:""} );
+});
+
+// ADMIN  ==> NOTIFICATION CREATED SUCCESSFULLY
+app.post("/NotifyCreate",function(req,res){
+    var N_Event_id = req.bodyEventId;
+    var N_Event_Notify = req.body.EventNotify;
+
+    if(N_Event_id==0&&N_Event_Notify==0){
+    res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"Enter the Details!" , SuNotifyTxt:""} );
+    }
+    else if(N_Event_Notify==0){
+    res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"Enter the Details!" , SuNotifyTxt:""} );
+    }else{
+        if(N_Event_id==0){
+            // ADD to NOTIFY Table (newly created)
+        res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"" , SuNotifyTxt:"Added Succesfully!"} );
+
+        }else{
+            // ADD to Notifiaction Tabel (old one where event_id is PK) 
+        res.render("NotifyCreate",{title:" -AdminNotifyCreate",  loginName:Aname , loginAddress:"NotifyCreate" , NErrtxt:"" , SuNotifyTxt:"Added Succesfully!"} );
+        }
+    }
+});
+
+    
+// ADMIN  ==> STUDENTS DETAILS REGISTERD FOR PARTICULAR EVENT
+var Students_reg_event = [];
+app.get("/DataViewEventsRegis/:EVEid",function(req,res){
+    var EVE_id = req.params.EVEid;
+    console.log(EVE_id);
+
+    connection.query("select * from admin_events where event_id = ?", [EVE_id] , function(error,result1,field){
+        Event_info = JSON.parse(JSON.stringify(result1));
+        console.log(Event_info);
+        var EVE_name = Event_info[0].event_name;
+        console.log(EVE_name);
+
+    connection.query("select * from user_login where usn in (select usn from user_reg where event_id=?) ORDER BY usn",[EVE_id] , function(error,result,field){
+        Students_reg_event = JSON.parse(JSON.stringify(result)); 
+        console.log(Students_reg_event);
+   
+
+       res.render("DataViewStudent",{title:" -DataViewStudent",  loginName:Aname , loginAddress:"DataViewStudent" , Data_Students :Students_reg_event , Event_Details : "The following students have registered for the Event"  , Event_Name:EVE_name});
+       // the name of EJS is not related to the GET route REQUEST
+         });
+
+    } );
+
 });
 
 
@@ -690,7 +745,7 @@ app.get("/DataViewUpEvents" , function(req,res){
 
 
 
-
+//The following students have registered for the Event
 
 app.listen("3000",function(){
     console.log("Successfully Running");
